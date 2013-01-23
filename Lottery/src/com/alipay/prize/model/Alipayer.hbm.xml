@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-12-20 19:34:41 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.alipay.prize.model.Alipayer" table="alipayer" catalog="Test">
+        <id name="id" type="string">
+            <column name="ID" length="45" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="name" type="string">
+            <column name="NAME" length="20" not-null="true" />
+        </property>
+        <property name="number" type="string">
+            <column name="NUMBER" length="15" not-null="true" />
+        </property>
+        <property name="nickName" type="string">
+            <column name="NICK_NAME" length="20" not-null="true" />
+        </property>
+        <property name="tele" type="string">
+            <column name="TELE" length="15" not-null="true" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" not-null="true" />
+        </property>
+        <property name="prizeId" type="string">
+            <column name="PRIZE_ID" length="45"  />
+        </property>
+        <property name="desc" type="string">
+            <column name="ALIPAYER_DESC" length="100"  />
+        </property>
+        <property name="gmtCreate" type="timestamp">
+            <column name="GMT_CREATE" length="19" not-null="true" />
+        </property>
+        <property name="gmtModified" type="timestamp">
+            <column name="GMT_MODIFIED" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

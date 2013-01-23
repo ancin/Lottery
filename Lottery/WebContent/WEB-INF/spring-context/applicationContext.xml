@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- dataSource config -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<!-- <property name="url" value="jdbc:mysql://localhost:3306/game?useUnicode=true&amp;characterEncoding=UTF-8" 
+			/> <property name="username" value="root" /> <property name="password" value="root" 
+			/> -->
+		<property name="url"
+			value="jdbc:mysql://mysql-1-1.alipay.net:3306/Test?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="test" />
+		<property name="password" value="123456" />
+
+	</bean>
+
+	<!-- SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="configLocation">
+			<value>classpath:com\alipay\hibernate\cfg\hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
+
+
+	<!-- TransactionManager 不过这里暂时没注入 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- view -->
+	<bean id="lotteryAction" class="com.alipay.prize.web.actions.LotteryAction"
+		singleton="false">
+		<property name="prizeService">
+			<ref bean="prizeService" />
+		</property>
+		<property name="pagerService">
+			<ref bean="pagerService" />
+		</property>
+	</bean>
+
+	<bean id="prizeGoAction" class="com.alipay.prize.web.actions.PrizeGoAction"
+		singleton="false">
+		<property name="prizeService">
+			<ref bean="prizeService" />
+		</property>
+		<property name="resultService">
+			<ref bean="resultService" />
+		</property>
+		<property name="alipayerService">
+			<ref bean="alipayerService" />
+		</property>
+	</bean>
+
+
+	<bean id="pagerService" class="com.alipay.commons.PagerService" />
+
+	<!-- DAO -->
+	<bean id="prizeDao" class="com.alipay.prize.dao.impl.PrizeDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="alipayerDAO" class="com.alipay.prize.dao.impl.AlipayerDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="lotteryResultDAO" class="com.alipay.prize.dao.impl.LotteryResultDaoImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- Services -->
+	<bean id="prizeService" class="com.alipay.prize.services.impl.PrizeServiceImpl">
+		<property name="prizeDao">
+			<ref bean="prizeDao" />
+		</property>
+	</bean>
+	<bean id="resultService" class="com.alipay.prize.services.impl.LotteryResultServiceImpl">
+		<property name="resultDao">
+			<ref bean="lotteryResultDAO" />
+		</property>
+		<property name="prizeDao">
+			<ref bean="prizeDao" />
+		</property>
+	</bean>
+	<bean id="alipayerService" class="com.alipay.prize.services.impl.AlipayerServiceImpl">
+		<property name="alipayerDao">
+			<ref bean="alipayerDAO" />
+		</property>
+	</bean>
+
+	<!-- -->
+	<bean id="lotteryResultAction" class="com.alipay.prize.web.actions.LotteryResultAction"
+		singleton="false">
+		<property name="lotteryResultService">
+			<ref bean="resultService" />
+		</property>
+		<property name="pagerService">
+			<ref bean="pagerService" />
+		</property>
+		<property name="prizeService">
+			<ref bean="prizeService" />
+		</property>
+	</bean>
+	<bean id="alipayerAction" class="com.alipay.prize.web.actions.AlipayerAction"
+		singleton="false">
+		<property name="alipayerService">
+			<ref bean="alipayerService" />
+		</property>
+		<property name="pagerService">
+			<ref bean="pagerService" />
+		</property>
+	</bean>
+
+<bean id="exceptionInceptor" class="com.alipay.commons.ExceptionInterceptor"
+		singleton="false">
+		
+	</bean>
+</beans>

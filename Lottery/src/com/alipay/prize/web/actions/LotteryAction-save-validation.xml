@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0//EN" "http://www.opensymphony.com/xwork/xwork-validator-1.0.dtd">
+<validators>
+    <!-- Field-Validator Syntax -->
+    <field name="prize.prizeName">
+        <field-validator type="requiredstring">
+            <message key="prize.prizeName.required"/>
+        </field-validator>
+    </field>
+    <field name="prize.prizeLevel">
+        <field-validator type="requiredstring">
+            <message key="prize.prizeLevel.required"/>
+        </field-validator>
+    </field>
+    
+</validators>

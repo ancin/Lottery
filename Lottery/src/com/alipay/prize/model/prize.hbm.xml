@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	 <class name="com.alipay.prize.model.Prize" table="prize" >
+		 <id name="id" type="string">
+            <column name="ID" length="45" />
+            <generator class="uuid.hex" /> 
+        </id>
+		<property name="prizeName" type="string">
+            <column name="PRIZE_NAME" length="30" />
+        </property>
+		 <property name="prizeLevel" type="string">
+            <column name="PRIZE_LEVEL" length="5" />
+        </property>
+		<property name="totalNum" type="int">
+            <column name="TOTAL_NUM" length="10" />
+        </property>
+		
+		  <property name="leftNum" type="int">
+            <column name="LEFT_NUM" length="10" />
+        </property>
+        <property name="picture" type="java.sql.Blob">
+            <column name="PICTURE" />
+        </property> 
+        
+		<property name="description" type="string">
+            <column name="description" length="100" />
+        </property>
+		
+		 <property name="gmtCreate" type="java.sql.Timestamp">
+            <column name="GMT_CREATE" length="7" />
+        </property>
+         <property name="gmtModify" type="java.sql.Timestamp">
+            <column name="GMT_MODIFIED" length="7" />
+        </property>
+        
+     </class>
+</hibernate-mapping>
